@@ -1,0 +1,1 @@
+export default 'Olá alunos de mestrado!'
