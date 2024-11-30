@@ -1,0 +1,39 @@
+<html lang="ru">
+<body>
+<h1>Время в
+    <a href='https://www.worldtimeserver.com/current_time_in_RU-SPE.aspx?city=Saint_Petersburg'>Санкт-Петербурге</a>
+</h1>
+<div id="result"></div>
+
+<script>
+    async function fetchCurrentTime() {
+        try {
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const targetUrl = 'https://www.worldtimeserver.com/current_time_in_RU-SPE.aspx?city=Saint_Petersburg';
+            const response = await fetch(proxyUrl + targetUrl);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const html = await response.text();
+            const timeRegex = /(\d{1,2}:\d{2}:\d{2})/;
+            const match = html.match(timeRegex);
+
+            if (match) {
+                const currentTime = match[1];
+                document.getElementById('result').textContent = `Текущее время в Санкт-Петербурге: ${currentTime}`;
+                console.log(`Текущее время в Санкт-Петербурге: ${currentTime}`);
+            } else {
+                console.log('Время не найдено');
+                document.getElementById('result').textContent = 'Время не найдено';
+            }
+        } catch (error) {
+            console.error('Ошибка при получении времени:', error);
+            document.getElementById('result').textContent = 'Ошибка при получении времени';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchCurrentTime);
+</script>
+
+</body>
+</html>
